@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   getAuth,
@@ -9,12 +9,19 @@ import {
 } from "firebase/auth";
 import { app } from "../ConnectAuth";
 
-function Login({ setUser }) {
+function Login({ setUser, user }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const provider = new GoogleAuthProvider();
   const auth = getAuth(app);
+  useEffect(() => {
+    const localUser = localStorage.getItem("displayName");
+    console.log("localUser from LS", localUser);
+    if (localUser) setUser(localUser);
+    //if theres a user already logged in, send them to welcome
+  }, []);
+
   const handleFormSubmit = (event) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
@@ -30,10 +37,13 @@ function Login({ setUser }) {
     signInWithPopup(auth, provider)
       .then((result) => {
         setUser(result.user);
+        localStorage.setItem("displayName", result.user.displayName);
+        console.log("this is my result", result.user.displayName);
         navigate("/");
       })
       .catch();
   };
+  console.log("Here is my user from parent app component", user);
   return (
     <>
       <h1>Login</h1>

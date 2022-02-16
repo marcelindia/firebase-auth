@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { app } from "../ConnectAuth";
 
-function SignUp({ setUser }) {
+function SignUp({ setUser, user }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
