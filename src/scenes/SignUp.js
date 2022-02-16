@@ -1,12 +1,38 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
-function SignUp() {
+import { Link, useNavigate } from "react-router-dom";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { app } from "../ConnectAuth";
+
+function SignUp({ setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const provider = new GoogleAuthProvider();
+  const auth = getAuth(app);
   const handleFormSubmit = (event) => {
     event.preventDefault();
-    alert(`Trying to sign-up as ${email}`);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((result) => {
+        //setUser in (), go to parent and pass prop
+        setUser(result.user);
+        //nav to home (welcome page)
+        navigate("/");
+      })
+      .catch(alert);
+  };
+  const handleGoogleLogin = () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        setUser(result.user);
+        navigate("/");
+      })
+      .catch();
   };
   return (
     <>
@@ -35,6 +61,12 @@ function SignUp() {
         <br />
         <input type="submit" value="Sign Up" />
       </form>
+      <button
+        onClick={handleGoogleLogin}
+        style={{ backgroundColor: "black", color: "white", border: "none" }}
+      >
+        Sign in with Google
+      </button>
       <p>
         Already a user? <Link to="/login">Login</Link>
       </p>
