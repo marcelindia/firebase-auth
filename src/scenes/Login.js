@@ -8,6 +8,7 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { app } from "../ConnectAuth";
+import Button from "react-bootstrap/Button";
 
 function Login({ setUser, user }) {
   const [email, setEmail] = useState("");
@@ -20,6 +21,7 @@ function Login({ setUser, user }) {
     console.log("localUser from LS", localUser);
     if (localUser) setUser(localUser);
     //if theres a user already logged in, send them to welcome
+    else setUser(null);
   }, []);
 
   const handleFormSubmit = (event) => {
@@ -71,12 +73,18 @@ function Login({ setUser, user }) {
         <br />
         <input type="submit" value="Login" />
       </form>
-      <button
-        onClick={handleGoogleLogin}
-        style={{ backgroundColor: "black", color: "white", border: "none" }}
-      >
-        Sign in with Google
-      </button>
+      <br />
+      <section className="text-center">
+        <Button
+          onClick={handleGoogleLogin}
+          style={{ backgroundColor: "black", color: "white", border: "none" }}
+          variant="primary"
+          size="lg"
+        >
+          Sign in with Google
+        </Button>
+      </section>
+
       <p>
         Not a user? <Link to="/signup">Sign Up</Link>
       </p>
