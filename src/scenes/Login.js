@@ -74,7 +74,7 @@ function Login({ setUser, user }) {
         <input type="submit" value="Login" />
       </form>
       <br />
-      <section className="text-center">
+      <div className="text-center">
         <Button
           onClick={handleGoogleLogin}
           style={{ backgroundColor: "black", color: "white", border: "none" }}
@@ -83,7 +83,7 @@ function Login({ setUser, user }) {
         >
           Sign in with Google
         </Button>
-      </section>
+      </div>
 
       <p>
         Not a user? <Link to="/signup">Sign Up</Link>

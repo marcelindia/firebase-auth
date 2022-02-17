@@ -61,14 +61,14 @@ function SignUp({ setUser, user }) {
         <br />
         <input type="submit" value="Sign Up" />
       </form>
-      <section className="text-center">
+      <div className="text-center">
         <button
           onClick={handleGoogleLogin}
           style={{ backgroundColor: "black", color: "white", border: "none" }}
         >
           Sign in with Google
         </button>
-      </section>
+      </div>
       <p>
         Already a user? <Link to="/login">Login</Link>
       </p>
